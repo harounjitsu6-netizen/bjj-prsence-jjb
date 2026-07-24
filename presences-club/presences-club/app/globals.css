@@ -1,0 +1,882 @@
+/* ==========================================================================
+   Cahier d'appel — feuille de style unique
+   Univers visuel : le cahier Seyès. Papier légèrement chaud, réglure violette,
+   filet de marge rouge, encre bleu-nuit. Les chiffres sont en chasse fixe.
+   ========================================================================== */
+
+:root {
+  --papier: #faf9f5;
+  --papier-carte: #ffffff;
+  --encre: #1e2140;
+  --encre-douce: #585c80;
+  --encre-pale: #9497b2;
+
+  --seyes: #dcd9f0;
+  --seyes-fort: #b9b3e6;
+  --violet: #4b3fc7;
+  --violet-pale: #eeecfb;
+
+  --present: #2e6b52;
+  --present-pale: #e6f0ea;
+  --retard: #b57c14;
+  --retard-pale: #fbf0d9;
+  --absent: #c8443e;
+  --absent-pale: #fbe8e6;
+
+  --rayon: 6px;
+  --ombre: 0 1px 2px rgba(30, 33, 64, 0.05), 0 8px 24px -16px rgba(30, 33, 64, 0.28);
+
+  --display: "Bricolage Grotesque", "Trebuchet MS", sans-serif;
+  --texte: "Instrument Sans", system-ui, -apple-system, "Segoe UI", sans-serif;
+  --chiffres: "IBM Plex Mono", ui-monospace, "SFMono-Regular", monospace;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html,
+body {
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  background: var(--papier);
+  color: var(--encre);
+  font-family: var(--texte);
+  font-size: 15px;
+  line-height: 1.5;
+  -webkit-font-smoothing: antialiased;
+}
+
+h1,
+h2,
+h3 {
+  font-family: var(--display);
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  margin: 0;
+}
+
+h1 {
+  font-size: clamp(1.65rem, 4vw, 2.3rem);
+  line-height: 1.1;
+}
+
+h2 {
+  font-size: 1.15rem;
+}
+
+h3 {
+  font-size: 0.98rem;
+}
+
+a {
+  color: inherit;
+}
+
+button,
+input,
+select,
+textarea {
+  font: inherit;
+  color: inherit;
+}
+
+:focus-visible {
+  outline: 2px solid var(--violet);
+  outline-offset: 2px;
+  border-radius: 3px;
+}
+
+/* --------------------------------------------------------- mise en page -- */
+
+.page {
+  max-width: 1080px;
+  margin: 0 auto;
+  padding: 28px 20px 96px;
+}
+
+.entete-page {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 16px;
+  margin-bottom: 24px;
+}
+
+.etiquette {
+  font-family: var(--chiffres);
+  font-size: 0.68rem;
+  font-weight: 500;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--encre-pale);
+  display: block;
+  margin-bottom: 6px;
+}
+
+.sous-titre {
+  color: var(--encre-douce);
+  margin: 6px 0 0;
+  max-width: 56ch;
+}
+
+.pile {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.rangee {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 10px;
+}
+
+/* ------------------------------------------------------------ navigation -- */
+
+.barre {
+  position: sticky;
+  top: 0;
+  z-index: 20;
+  background: rgba(250, 249, 245, 0.9);
+  backdrop-filter: blur(8px);
+  border-bottom: 1px solid var(--seyes);
+}
+
+.barre-contenu {
+  max-width: 1080px;
+  margin: 0 auto;
+  padding: 12px 20px;
+  display: flex;
+  align-items: center;
+  gap: 24px;
+}
+
+.marque {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  text-decoration: none;
+  font-family: var(--display);
+  font-weight: 800;
+  letter-spacing: -0.03em;
+  font-size: 1.05rem;
+  white-space: nowrap;
+}
+
+.marque-signe {
+  width: 26px;
+  height: 26px;
+  border-radius: 4px;
+  background: var(--encre);
+  color: #fff;
+  display: grid;
+  place-items: center;
+  font-family: var(--chiffres);
+  font-size: 0.8rem;
+  font-weight: 600;
+  position: relative;
+}
+
+.marque-signe::after {
+  content: "";
+  position: absolute;
+  left: 6px;
+  top: 0;
+  bottom: 0;
+  width: 1px;
+  background: var(--absent);
+  opacity: 0.85;
+}
+
+.onglets {
+  display: flex;
+  gap: 2px;
+  overflow-x: auto;
+  scrollbar-width: none;
+}
+
+.onglets::-webkit-scrollbar {
+  display: none;
+}
+
+.onglet {
+  padding: 7px 13px;
+  border-radius: var(--rayon);
+  text-decoration: none;
+  color: var(--encre-douce);
+  font-weight: 500;
+  font-size: 0.92rem;
+  white-space: nowrap;
+  transition: background 0.15s, color 0.15s;
+}
+
+.onglet:hover {
+  background: var(--violet-pale);
+  color: var(--violet);
+}
+
+.onglet[aria-current="page"] {
+  background: var(--encre);
+  color: #fff;
+}
+
+/* ---------------------------------------------------------------- cartes -- */
+
+.carte {
+  background: var(--papier-carte);
+  border: 1px solid var(--seyes);
+  border-radius: var(--rayon);
+  box-shadow: var(--ombre);
+}
+
+.carte-entete {
+  padding: 16px 18px;
+  border-bottom: 1px solid var(--seyes);
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+.carte-corps {
+  padding: 18px;
+}
+
+/* ---------------------------------------------------------------- boutons -- */
+
+.bouton {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  padding: 8px 14px;
+  border: 1px solid var(--seyes-fort);
+  border-radius: var(--rayon);
+  background: var(--papier-carte);
+  color: var(--encre);
+  font-weight: 500;
+  font-size: 0.9rem;
+  cursor: pointer;
+  text-decoration: none;
+  transition: background 0.15s, border-color 0.15s, transform 0.08s;
+}
+
+.bouton:hover {
+  background: var(--violet-pale);
+  border-color: var(--violet);
+}
+
+.bouton:active {
+  transform: translateY(1px);
+}
+
+.bouton:disabled {
+  opacity: 0.45;
+  cursor: not-allowed;
+}
+
+.bouton--primaire {
+  background: var(--encre);
+  border-color: var(--encre);
+  color: #fff;
+}
+
+.bouton--primaire:hover {
+  background: var(--violet);
+  border-color: var(--violet);
+}
+
+.bouton--danger {
+  color: var(--absent);
+  border-color: var(--absent-pale);
+}
+
+.bouton--danger:hover {
+  background: var(--absent-pale);
+  border-color: var(--absent);
+}
+
+.bouton--petit {
+  padding: 5px 10px;
+  font-size: 0.82rem;
+}
+
+/* --------------------------------------------------------------- champs -- */
+
+.champ {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
+
+.champ > span {
+  font-size: 0.78rem;
+  font-weight: 600;
+  color: var(--encre-douce);
+}
+
+input[type="text"],
+input[type="date"],
+input[type="month"],
+select,
+textarea {
+  padding: 8px 11px;
+  border: 1px solid var(--seyes-fort);
+  border-radius: var(--rayon);
+  background: var(--papier-carte);
+  width: 100%;
+}
+
+input[type="date"] {
+  font-family: var(--chiffres);
+}
+
+select {
+  min-width: 160px;
+  cursor: pointer;
+}
+
+textarea {
+  resize: vertical;
+  min-height: 108px;
+  line-height: 1.6;
+}
+
+/* ------------------------------------------- signature : lignes du cahier -- */
+
+.cahier {
+  position: relative;
+  padding-left: 0;
+}
+
+/* le filet de marge, comme sur un cahier d'écolier */
+.cahier::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 46px;
+  width: 1px;
+  background: var(--absent);
+  opacity: 0.35;
+  pointer-events: none;
+}
+
+.ligne {
+  display: grid;
+  grid-template-columns: 46px 1fr auto;
+  align-items: center;
+  gap: 14px;
+  padding: 9px 16px 9px 0;
+  border-bottom: 1px solid var(--seyes);
+  transition: background 0.15s;
+}
+
+.ligne:last-child {
+  border-bottom: none;
+}
+
+.ligne:hover {
+  background: rgba(238, 236, 251, 0.45);
+}
+
+.ligne-numero {
+  font-family: var(--chiffres);
+  font-size: 0.78rem;
+  color: var(--encre-pale);
+  text-align: right;
+  padding-right: 12px;
+}
+
+.ligne-nom {
+  min-width: 0;
+}
+
+.ligne-nom strong {
+  font-weight: 600;
+}
+
+.ligne-nom a {
+  text-decoration: none;
+}
+
+.ligne-nom a:hover strong {
+  text-decoration: underline;
+  text-decoration-color: var(--seyes-fort);
+  text-underline-offset: 3px;
+}
+
+.ligne-detail {
+  display: block;
+  font-size: 0.78rem;
+  color: var(--encre-pale);
+  font-family: var(--chiffres);
+}
+
+.ligne[data-etat="absent"] {
+  background: rgba(251, 232, 230, 0.5);
+}
+
+.ligne[data-etat="retard"] {
+  background: rgba(251, 240, 217, 0.42);
+}
+
+/* --------------------------------------------- sélecteur présent/absent -- */
+
+.segment {
+  display: inline-flex;
+  border: 1px solid var(--seyes-fort);
+  border-radius: var(--rayon);
+  overflow: hidden;
+  background: var(--papier-carte);
+}
+
+.segment button {
+  border: none;
+  background: transparent;
+  padding: 7px 13px;
+  cursor: pointer;
+  font-size: 0.85rem;
+  font-weight: 500;
+  color: var(--encre-douce);
+  border-right: 1px solid var(--seyes);
+  transition: background 0.12s, color 0.12s;
+}
+
+.segment button:last-child {
+  border-right: none;
+}
+
+.segment button:hover {
+  background: var(--violet-pale);
+}
+
+.segment button[aria-pressed="true"] {
+  color: #fff;
+  font-weight: 600;
+}
+
+.segment button[data-etat="present"][aria-pressed="true"] {
+  background: var(--present);
+}
+
+.segment button[data-etat="retard"][aria-pressed="true"] {
+  background: var(--retard);
+}
+
+.segment button[data-etat="absent"][aria-pressed="true"] {
+  background: var(--absent);
+}
+
+.segment-court {
+  display: none;
+}
+
+/* ------------------------------------------------------------- compteurs -- */
+
+.compteurs {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+  gap: 1px;
+  background: var(--seyes);
+  border: 1px solid var(--seyes);
+  border-radius: var(--rayon);
+  overflow: hidden;
+}
+
+.compteur {
+  background: var(--papier-carte);
+  padding: 13px 16px;
+}
+
+.compteur-valeur {
+  font-family: var(--chiffres);
+  font-size: 1.5rem;
+  font-weight: 600;
+  font-variant-numeric: tabular-nums;
+  line-height: 1.15;
+}
+
+.compteur-libelle {
+  font-size: 0.76rem;
+  color: var(--encre-pale);
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  font-family: var(--chiffres);
+}
+
+.compteur[data-ton="present"] .compteur-valeur {
+  color: var(--present);
+}
+
+.compteur[data-ton="retard"] .compteur-valeur {
+  color: var(--retard);
+}
+
+.compteur[data-ton="absent"] .compteur-valeur {
+  color: var(--absent);
+}
+
+/* -------------------------------------------------------------- tableaux -- */
+
+.tableau-cadre {
+  overflow-x: auto;
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.9rem;
+}
+
+th {
+  text-align: left;
+  font-family: var(--chiffres);
+  font-size: 0.7rem;
+  font-weight: 500;
+  letter-spacing: 0.09em;
+  text-transform: uppercase;
+  color: var(--encre-pale);
+  padding: 10px 12px;
+  border-bottom: 1px solid var(--seyes-fort);
+  white-space: nowrap;
+}
+
+td {
+  padding: 10px 12px;
+  border-bottom: 1px solid var(--seyes);
+  vertical-align: middle;
+}
+
+tbody tr:last-child td {
+  border-bottom: none;
+}
+
+tbody tr:hover {
+  background: rgba(238, 236, 251, 0.4);
+}
+
+.num {
+  font-family: var(--chiffres);
+  font-variant-numeric: tabular-nums;
+  text-align: right;
+}
+
+.col-rang {
+  width: 52px;
+  font-family: var(--chiffres);
+  font-weight: 600;
+  color: var(--encre-pale);
+}
+
+tr[data-podium="1"] .col-rang,
+tr[data-podium="2"] .col-rang,
+tr[data-podium="3"] .col-rang {
+  color: var(--violet);
+}
+
+/* jauge de taux dessinée derrière la cellule */
+.jauge {
+  position: relative;
+  min-width: 132px;
+}
+
+.jauge-fond {
+  position: absolute;
+  inset: 6px 12px;
+  background: var(--seyes);
+  border-radius: 2px;
+  opacity: 0.5;
+}
+
+.jauge-valeur {
+  position: absolute;
+  left: 12px;
+  top: 6px;
+  bottom: 6px;
+  background: var(--present);
+  border-radius: 2px;
+  opacity: 0.28;
+}
+
+.jauge-texte {
+  position: relative;
+  font-family: var(--chiffres);
+  font-variant-numeric: tabular-nums;
+  font-weight: 600;
+  padding-left: 4px;
+}
+
+/* ------------------------------------------- signature : grille annuelle -- */
+
+.grille-cadre {
+  overflow-x: auto;
+  padding-bottom: 6px;
+}
+
+.grille {
+  display: grid;
+  gap: 3px;
+  width: max-content;
+}
+
+.grille-nom {
+  font-size: 0.82rem;
+  padding-right: 14px;
+  white-space: nowrap;
+  position: sticky;
+  left: 0;
+  background: var(--papier-carte);
+  z-index: 1;
+  display: flex;
+  align-items: center;
+}
+
+.case {
+  width: 13px;
+  height: 13px;
+  border-radius: 2px;
+  background: var(--seyes);
+  opacity: 0.5;
+}
+
+.case[data-etat="present"] {
+  background: var(--present);
+  opacity: 1;
+}
+
+.case[data-etat="retard"] {
+  background: var(--retard);
+  opacity: 1;
+}
+
+.case[data-etat="absent"] {
+  background: var(--absent);
+  opacity: 1;
+}
+
+.legende {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 16px;
+  font-size: 0.8rem;
+  color: var(--encre-douce);
+  margin-top: 14px;
+}
+
+.legende span {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+}
+
+/* --------------------------------------------------------------- divers -- */
+
+.puce {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  padding: 2px 9px;
+  border-radius: 999px;
+  font-size: 0.76rem;
+  font-weight: 600;
+  font-family: var(--chiffres);
+}
+
+.puce[data-ton="present"] {
+  background: var(--present-pale);
+  color: var(--present);
+}
+
+.puce[data-ton="retard"] {
+  background: var(--retard-pale);
+  color: var(--retard);
+}
+
+.puce[data-ton="absent"] {
+  background: var(--absent-pale);
+  color: var(--absent);
+}
+
+.puce[data-ton="neutre"] {
+  background: var(--violet-pale);
+  color: var(--violet);
+}
+
+/* --------------------------------------------------- filtres catégories -- */
+
+.filtres {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+
+.filtre {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 6px 13px;
+  border: 1px solid var(--seyes-fort);
+  border-radius: 999px;
+  background: var(--papier-carte);
+  color: var(--encre-douce);
+  font-weight: 500;
+  font-size: 0.85rem;
+  cursor: pointer;
+  transition: background 0.15s, border-color 0.15s, color 0.15s;
+}
+
+.filtre:hover {
+  background: var(--violet-pale);
+  border-color: var(--violet);
+  color: var(--violet);
+}
+
+.filtre[aria-pressed="true"] {
+  background: var(--encre);
+  border-color: var(--encre);
+  color: #fff;
+}
+
+.filtre-compte {
+  font-family: var(--chiffres);
+  font-size: 0.76rem;
+  font-variant-numeric: tabular-nums;
+  opacity: 0.75;
+}
+
+.categorie {
+  display: inline-block;
+  font-family: var(--chiffres);
+  font-size: 0.72rem;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  color: var(--encre-pale);
+}
+
+.vide {
+  text-align: center;
+  padding: 52px 24px;
+  color: var(--encre-douce);
+}
+
+.vide h2 {
+  margin-bottom: 8px;
+}
+
+.vide p {
+  max-width: 44ch;
+  margin: 0 auto 20px;
+}
+
+.note {
+  font-size: 0.82rem;
+  color: var(--encre-pale);
+}
+
+.erreur {
+  color: var(--absent);
+  font-size: 0.85rem;
+}
+
+.separateur {
+  height: 1px;
+  background: var(--seyes);
+  border: none;
+  margin: 20px 0;
+}
+
+.pousser {
+  margin-left: auto;
+}
+
+/* ---------------------------------------------------------- responsive -- */
+
+@media (max-width: 720px) {
+  .barre-contenu {
+    gap: 12px;
+    padding: 10px 14px;
+  }
+
+  .page {
+    padding: 20px 14px 80px;
+  }
+
+  .marque span:last-child {
+    display: none;
+  }
+
+  .ligne {
+    grid-template-columns: 34px 1fr;
+    grid-template-areas:
+      "numero nom"
+      "segment segment";
+    gap: 4px 8px;
+    padding-right: 12px;
+  }
+
+  .cahier::before {
+    left: 34px;
+  }
+
+  .ligne-numero {
+    grid-area: numero;
+    padding-right: 8px;
+  }
+
+  .ligne-nom {
+    grid-area: nom;
+  }
+
+  .ligne > .segment {
+    grid-area: segment;
+    display: flex;
+    margin: 6px 0 2px 42px;
+  }
+
+  .segment button {
+    flex: 1;
+    padding: 9px 10px;
+  }
+
+  .segment-long {
+    display: none;
+  }
+
+  .segment-court {
+    display: inline;
+  }
+
+  .masque-mobile {
+    display: none;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  * {
+    transition: none !important;
+    animation: none !important;
+  }
+}
+
+@media print {
+  .barre,
+  .bouton,
+  .segment {
+    display: none !important;
+  }
+
+  body {
+    background: #fff;
+  }
+
+  .carte {
+    box-shadow: none;
+  }
+}
